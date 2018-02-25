@@ -1,8 +1,11 @@
-import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
+import ListBooks from './ListBooks'
+import SearchBooks from './SearchBooks'
+import * as BooksAPI from '../utils/BooksAPI'
 import './App.css'
 
-class BooksApp extends React.Component {
+class BooksApp extends Component {
   state = {
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -16,6 +19,9 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
+        <ListBooks></ListBooks>
+        <SearchBooks></SearchBooks>
+
         {this.state.showSearchPage ? (
           <div className="search-books">
             <div className="search-books-bar">
