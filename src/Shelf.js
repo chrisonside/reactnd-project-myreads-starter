@@ -7,7 +7,8 @@ class Shelf extends Component {
 	static propTypes = {
 		shelfTitle: PropTypes.string.isRequired,
 		booksOnShelf: PropTypes.array.isRequired,
-		onAddBook: PropTypes.func.isRequired
+		onAddBook: PropTypes.func.isRequired,
+		shelves: PropTypes.array.isRequired
 	}
 
 	/*
@@ -27,19 +28,21 @@ class Shelf extends Component {
 	render() {
 
 		// Descructure props object for easier reading
-		const {shelfTitle, booksOnShelf, onAddBook} = this.props;
+		const {shelfTitle, booksOnShelf, onAddBook, shelves} = this.props;
 
 		return (
 			<div>
 				<div className='bookshelf'>
 					<h2 className='bookshelf-title'>{this.makeReadable(shelfTitle)}</h2>
 					<div className='bookshelf-books'>
-						<ol className="books-grid">
+						<ol className='books-grid'>
 							{booksOnShelf.map((book) => (
 								<Book
 									key={book.id}
 									currentBook={book}
 									onAddBook={onAddBook}
+									shelves={shelves}
+									makeReadable={this.makeReadable}
 								/>
 							))
 							}

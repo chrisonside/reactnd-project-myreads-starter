@@ -25,13 +25,12 @@ class ListBooks extends Component {
 	}
 
 	/*
-		* Ciphen off books into individual shelfs (itemsByCategory)
+		* Ciphen off books into individual shelves (itemsByCategory)
 		* Then grab all the different shelf titles, and for each one, return UI for that shelf title
-		* Each Shelf component created will go on to request the UI for each Book that appears on the Shelf
+		* Each Shelf component created will go on to request the UI for each Book component that appears on the Shelf
 	*/
 	renderList = (data, category) => {
 			const itemsByCategory = this.groupBy(data, category)
-			console.log(itemsByCategory)
 			const categories = Object.keys(itemsByCategory)
 			return categories.map((categoryTitle) => (
 				<Shelf
@@ -39,6 +38,7 @@ class ListBooks extends Component {
 					shelfTitle={categoryTitle}
 					booksOnShelf={itemsByCategory[categoryTitle]}
 					onAddBook={this.props.onAddBook}
+					shelves={categories}
 				/>
 			))
 	}
