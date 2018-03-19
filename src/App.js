@@ -31,7 +31,7 @@ class BooksApp extends Component {
 
   render() {
     return (
-      <div className="app">
+      <div className='app'>
 
         {/* Update UI based on the URL, using React Router's <Route> tag */}
         <Route exact path='/' render={() => (
