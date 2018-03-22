@@ -7,8 +7,8 @@ class Book extends Component {
 	static propTypes = {
 		currentBook: PropTypes.object.isRequired,
 		onAddBook: PropTypes.func.isRequired,
-		shelves: PropTypes.array.isRequired,
-		makeReadable: PropTypes.func.isRequired
+		makeReadable: PropTypes.func.isRequired,
+		options: PropTypes.array.isRequired
 	}
 
 	/*
@@ -24,14 +24,10 @@ class Book extends Component {
 		))
 	}
 
-	handleOptionChange = () => {
-
-	}
-
 	render() {
 
 		// Destructure props object for easier reading
-		const { currentBook, onAddBook, shelves } = this.props
+		const { currentBook, onAddBook, options } = this.props
 
 		return(
 			<li>
@@ -43,10 +39,9 @@ class Book extends Component {
 			      	backgroundImage: `url(${currentBook.imageLinks.thumbnail})`
 			      }}></div>
 			      <div className='book-shelf-changer'>
-			        <select value={currentBook.shelf} onChange={this.handleOptionChange}>
+			        <select value={currentBook.shelf} onChange={(event) => onAddBook(currentBook, event.target.value)}>
 			          <option value='none' disabled>Move to...</option>
-			          {this.renderOptions(shelves)}
-			          <option value='none'>None</option>
+			          {this.renderOptions(options)}
 			        </select>
 			      </div>
 			    </div>

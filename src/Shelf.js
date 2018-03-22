@@ -8,7 +8,7 @@ class Shelf extends Component {
 		shelfTitle: PropTypes.string.isRequired,
 		booksOnShelf: PropTypes.array.isRequired,
 		onAddBook: PropTypes.func.isRequired,
-		shelves: PropTypes.array.isRequired
+		options: PropTypes.array.isRequired
 	}
 
 	/*
@@ -28,7 +28,7 @@ class Shelf extends Component {
 	render() {
 
 		// Descructure props object for easier reading
-		const {shelfTitle, booksOnShelf, onAddBook, shelves} = this.props;
+		const {shelfTitle, booksOnShelf, onAddBook, options} = this.props;
 
 		return (
 			<div>
@@ -41,8 +41,8 @@ class Shelf extends Component {
 									key={book.id}
 									currentBook={book}
 									onAddBook={onAddBook}
-									shelves={shelves}
 									makeReadable={this.makeReadable}
+									options={options}
 								/>
 							))
 							}
