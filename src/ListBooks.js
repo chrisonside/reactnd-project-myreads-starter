@@ -8,7 +8,8 @@ class ListBooks extends Component {
 	static propTypes = {
 		books: PropTypes.array.isRequired,
 		onAddBook: PropTypes.func.isRequired,
-		options: PropTypes.array.isRequired
+		options: PropTypes.array.isRequired,
+		makeReadable: PropTypes.func.isRequired
 	}
 
 	/*
@@ -32,7 +33,6 @@ class ListBooks extends Component {
 	*/
 	renderList = (data, category) => {
 			const itemsByCategory = this.groupBy(data, category)
-			console.log(itemsByCategory)
 			const categories = Object.keys(itemsByCategory)
 			return categories.map((categoryTitle) => (
 				<Shelf
@@ -41,6 +41,7 @@ class ListBooks extends Component {
 					booksOnShelf={itemsByCategory[categoryTitle]}
 					onAddBook={this.props.onAddBook}
 					options={this.props.options}
+					makeReadable={this.props.makeReadable}
 				/>
 			))
 	}

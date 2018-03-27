@@ -8,32 +8,19 @@ class Shelf extends Component {
 		shelfTitle: PropTypes.string.isRequired,
 		booksOnShelf: PropTypes.array.isRequired,
 		onAddBook: PropTypes.func.isRequired,
-		options: PropTypes.array.isRequired
-	}
-
-	/*
-		* Function takes a camel case string and breaks it into a readable string
-		* Note - this function is not my own - https://stackoverflow.com/questions/4149276/javascript-camelcase-to-regular-form#answer-6229124
-	*/
-	makeReadable = (camelString) => {
-    return camelString
-        // insert a space between lower & upper
-        .replace(/([a-z])([A-Z])/g, '$1 $2')
-        // space before last upper in a sequence followed by lower
-        .replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
-        // uppercase the first character
-        .replace(/^./, function(str){ return str.toUpperCase(); })
+		options: PropTypes.array.isRequired,
+		makeReadable: PropTypes.func.isRequired
 	}
 
 	render() {
 
 		// Descructure props object for easier reading
-		const {shelfTitle, booksOnShelf, onAddBook, options} = this.props;
+		const {shelfTitle, booksOnShelf, onAddBook, options, makeReadable} = this.props
 
 		return (
 			<div>
 				<div className='bookshelf'>
-					<h2 className='bookshelf-title'>{this.makeReadable(shelfTitle)}</h2>
+					<h2 className='bookshelf-title'>{makeReadable(shelfTitle)}</h2>
 					<div className='bookshelf-books'>
 						<ol className='books-grid'>
 							{booksOnShelf.map((book) => (
@@ -41,7 +28,7 @@ class Shelf extends Component {
 									key={book.id}
 									currentBook={book}
 									onAddBook={onAddBook}
-									makeReadable={this.makeReadable}
+									makeReadable={makeReadable}
 									options={options}
 								/>
 							))
