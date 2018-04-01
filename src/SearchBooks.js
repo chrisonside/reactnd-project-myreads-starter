@@ -42,23 +42,7 @@ class SearchBooks extends Component {
 	}
 
 	/*
-    * Function to handle the form input changing and set component's state accordingly
-  */
-	updateQuery = (query) => {
-		this.setState({ query: query.trim() })
-	}
-
-
-	updateResults = (query, results) => {
-		this.setState({
-			currentTerm: query,
-			results: results
-		})
-	}
-
-
-	/*
-	 *	Goal of function is to return the API search results, but if any books are in the bookshelf already, to reflect their shelf property
+	 *	Function returns API search results, but if any books are in a shelf already, add their shelf property
 	*/
 	mergeObjectArrays = (books, searchResults) => {
 		// Loop through books in my search searchResults (where we will know there will be a max of 20 searchResults)
@@ -79,33 +63,57 @@ class SearchBooks extends Component {
 		return searchResults
 	}
 
+	/*
+    * Function to handle the form input changing and set component's state accordingly
+  */
+	updateQuery = (event) => {
+		let query;
+		// Handle keyups - only deal with backspace being hit on the keydowns
+		if(event.type === 'keydown') {
+			if(event.keyCode === 8) {
+				event.preventDefault();
+				console.log('delete button pressed')
+				query = this.state.query.slice(0, -1);
+				console.log(query)
+			} else {
+				// For all other keydown events we want to ignore these
+				return;
+			}
+		} else {
+			// Handle onchange
+			query = event.target.value;
+		}
+		// So if the user has typed something into our input box, meaning our this.state.query is truthy...
+		// To prevent an infinite loop, check the term has changed since the last search on the API
+		// And if it's an approved search term...
+		if (query && query !== this.props.currentTerm && this.searchArray(query, this.props.approvedSearchTerms) ) {
+			// Search the Books API
+			BooksAPI.search(query).then((response) => {
+				// The books returned from the BooksAPI search don't have any shelf property.
+				// So cross reference the search API books against the current bookshelf books
+				// If the search results books already have a shelf property, assign it, or set to none
+				response = this.mergeObjectArrays(this.props.books, response)
+
+				// Finally update this component's state with the results, and trigger a render via set.state
+				this.setState({
+					query: query,
+					currentTerm: query,
+					results: response
+				})
+			})
+			// }
+		} else {
+			this.setState({
+				query: query,
+				results: []
+			})
+		}
+	}
 
 	render() {
 
 		const { books, onAddBook, options, approvedSearchTerms, makeReadable } = this.props
 		const { query, currentTerm, results } = this.state
-
-		// So if the user has typed something into our input box, meaning our this.state.query is truthy...
-		if (query) {
-			// To prevent an infinite loop, check the term has changed since the last search on the API
-			if (query !== currentTerm) {
-				// Check if it's a valid term in our API
-				const validTerm = this.searchArray(query, approvedSearchTerms)
-				// If it is, search the Books API
-				if(validTerm) {
-					BooksAPI.search(query).then((response) => {
-
-						// The books returned from the BooksAPI search don't have any shelf property.
-						// So cross reference the search API books against the current bookshelf books
-						// If the search results books already have a shelf property, assign it, or set to none
-						response = this.mergeObjectArrays(books, response)
-
-						// Finally update this component's state with the results, and trigger a render via set.state
-						this.updateResults(query, response)
-					})
-				}
-			}
-		}
 
 		return (
 			<div>
@@ -117,7 +125,10 @@ class SearchBooks extends Component {
 				      	type="text"
 				      	placeholder="Search by title or author"
 								value={query}
-								onChange={ (event) => this.updateQuery(event.target.value) }
+								// onChange={ (event) => this.updateQuery(event.target.value) }
+								onChange={ (event) => this.updateQuery(event) }
+								// onKeyDown={ (event) => this.handleBackspace(event) }
+								onKeyDown={ (event) => this.updateQuery(event) }
 				      />
 				    </div>
 				  </div>
