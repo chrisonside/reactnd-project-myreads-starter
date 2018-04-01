@@ -72,9 +72,7 @@ class SearchBooks extends Component {
 		if(event.type === 'keydown') {
 			if(event.keyCode === 8) {
 				event.preventDefault();
-				console.log('delete button pressed')
 				query = this.state.query.slice(0, -1);
-				console.log(query)
 			} else {
 				// For all other keydown events we want to ignore these
 				return;
@@ -83,10 +81,12 @@ class SearchBooks extends Component {
 			// Handle onchange
 			query = event.target.value;
 		}
+
 		// So if the user has typed something into our input box, meaning our this.state.query is truthy...
 		// To prevent an infinite loop, check the term has changed since the last search on the API
 		// And if it's an approved search term...
 		if (query && query !== this.props.currentTerm && this.searchArray(query, this.props.approvedSearchTerms) ) {
+			this.setState({	query })
 			// Search the Books API
 			BooksAPI.search(query).then((response) => {
 				// The books returned from the BooksAPI search don't have any shelf property.
@@ -96,7 +96,6 @@ class SearchBooks extends Component {
 
 				// Finally update this component's state with the results, and trigger a render via set.state
 				this.setState({
-					query: query,
 					currentTerm: query,
 					results: response
 				})
@@ -119,15 +118,17 @@ class SearchBooks extends Component {
 			<div>
 				<div className="search-books">
 				  <div className="search-books-bar">
+				  <Link
+					to="/"
+					className="close-search"
+				>Back to home page</Link>
 				    <div className="search-books-input-wrapper">
 							{/* Bind input value to the query property in components state */}
 				      <input
 				      	type="text"
 				      	placeholder="Search by title or author"
 								value={query}
-								// onChange={ (event) => this.updateQuery(event.target.value) }
 								onChange={ (event) => this.updateQuery(event) }
-								// onKeyDown={ (event) => this.handleBackspace(event) }
 								onKeyDown={ (event) => this.updateQuery(event) }
 				      />
 				    </div>
@@ -136,10 +137,6 @@ class SearchBooks extends Component {
 				{/* Useful for debugging
 			  	{JSON.stringify(this.state)}
 			  */}
-				<Link
-					to='/'
-					className='open-search'
-				>Back to home page</Link>
 				{results.length > 0 && (
         	<Results
 						results={results}
