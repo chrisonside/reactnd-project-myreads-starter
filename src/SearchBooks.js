@@ -55,9 +55,11 @@ class SearchBooks extends Component {
 			let bookMatch = books.filter((book) => {
 				return searchResult.id === book.id
 			})
-			// If there is a match, add that shelf property to this search result
+			// If there is a match, add that shelf property to this search result, else set to none
 			if(bookMatch.length > 0) {
 				searchResult['shelf'] = bookMatch[0].shelf
+			} else {
+				searchResult['shelf'] = 'none'
 			}
 		})
 		return searchResults
