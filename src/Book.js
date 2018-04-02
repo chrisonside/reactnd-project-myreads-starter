@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
+import backUpImage from './img/coming-soon.jpg';
 
 class Book extends Component {
 
@@ -24,9 +25,22 @@ class Book extends Component {
 		))
 	}
 
+	/*
+		* Function handles situation where book does not have a thumbnail
+		* Returns the thumbnail or an imported back up image
+	*/
+	handleBgImage = (book) => {
+		let bgImageURL;
+		if(typeof book.imageLinks === 'undefined') {
+			bgImageURL = `url(${backUpImage})`
+		} else {
+			bgImageURL = `url(${book.imageLinks.thumbnail})`
+		}
+		return bgImageURL
+	}
+
 	render() {
 
-		// Destructure props object for easier reading
 		const { currentBook, onAddBook, options } = this.props
 
 		return(
@@ -36,7 +50,8 @@ class Book extends Component {
 			      <div className='book-cover' style={{
 			      	width: 128,
 			      	height: 193,
-			      	backgroundImage: `url(${currentBook.imageLinks.thumbnail})`
+			      	// backgroundImage: `url(${backUpImage})`
+			      	backgroundImage: this.handleBgImage(currentBook)
 			      }}></div>
 			      <div className='book-shelf-changer'>
 			        <select value={currentBook.shelf} onChange={(event) => onAddBook(currentBook, event.target.value)}>
@@ -46,7 +61,6 @@ class Book extends Component {
 			      </div>
 			    </div>
 			    <div className='book-title'>{currentBook.title}</div>
-			    <div className='book-authors'>{currentBook.authors}</div>
 			  </div>
 			</li>
 		)
