@@ -74,6 +74,8 @@ class SearchBooks extends Component {
 			if(event.keyCode === 8) {
 				event.preventDefault();
 				query = this.state.query.slice(0, -1);
+				// TODO: handle user pressing backspace when cursor is not at end of cursor string
+				// TODO: handle user selecting > 1 letter and pressing backspace
 			} else {
 				// For all other keydown events we want to ignore these
 				return;
