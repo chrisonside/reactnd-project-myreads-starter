@@ -17,7 +17,6 @@ class SearchBooks extends Component {
 
 	state = {
 		query: '',
-		currentTerm: '',
 		results: []
 	}
 
@@ -83,9 +82,8 @@ class SearchBooks extends Component {
 		}
 
 		// So if the user has typed something into our input box, meaning our this.state.query is truthy...
-		// To prevent an infinite loop, check the term has changed since the last search on the API
 		// And if it's an approved search term...
-		if (query && query !== this.props.currentTerm && this.searchArray(query, this.props.approvedSearchTerms) ) {
+		if (query && this.searchArray(query, this.props.approvedSearchTerms) ) {
 			this.setState({	query })
 			// Search the Books API
 			BooksAPI.search(query).then((response) => {
@@ -96,7 +94,6 @@ class SearchBooks extends Component {
 
 				// Finally update this component's state with the results, and trigger a render via set.state
 				this.setState({
-					currentTerm: query,
 					results: response
 				})
 			})
@@ -112,7 +109,7 @@ class SearchBooks extends Component {
 	render() {
 
 		const { books, onAddBook, options, approvedSearchTerms, makeReadable } = this.props
-		const { query, currentTerm, results } = this.state
+		const { query, results } = this.state
 
 		return (
 			<div>
