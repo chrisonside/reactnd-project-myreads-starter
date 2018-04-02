@@ -19,6 +19,7 @@ class SearchBooks extends Component {
 
 	state = {
 		query: '',
+		validSearch: 'search-is-valid',
 		timer: null,
 		results: []
 	}
@@ -91,7 +92,7 @@ class SearchBooks extends Component {
     * Function to update component's results state based on user input
   */
 	updateResults = (event) => {
-		let query = this.state.query;
+		let query = this.state.query.trim();
 		// If the user has typed something in input field, meaning this.state.query is truthy
 		// And if that query is an approved search term
 		if (query && this.searchArray(query, this.props.approvedSearchTerms) ) {
@@ -101,12 +102,14 @@ class SearchBooks extends Component {
 				response = this.mergeObjectArrays(this.props.books, response)
 				// Finally update this component's state with the results and trigger re-render
 				this.setState({
+					validSearch: 'search-is-valid',
 					results: response
 				})
 			})
 			// }
 		} else {
 			this.setState({
+				validSearch: 'search-not-valid',
 				results: []
 			})
 		}
@@ -130,7 +133,10 @@ class SearchBooks extends Component {
 	render() {
 
 		const { books, onAddBook, options, approvedSearchTerms, makeReadable } = this.props
-		const { query, results } = this.state
+		const { query, results, validSearch } = this.state
+
+		// Ready approved search terms for displaying to user
+		const terms = approvedSearchTerms.join(', ');
 
 		return (
 			<div>
@@ -155,6 +161,10 @@ class SearchBooks extends Component {
 				{/* Useful for debugging
 			  	{JSON.stringify(this.state)}
 			  */}
+			  <div className="search-books-help">
+					<h2 className={validSearch + ' search-books-heading'}>The following search terms are valid:</h2>
+      		<div className="search-books-terms">{terms}</div>
+      	</div>
 				{results.length > 0 && (
         	<Results
 						results={results}

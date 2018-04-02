@@ -100,7 +100,29 @@ body, .app {
 }
 
 .search-books-results {
-  padding: 80px 10px 20px;
+  padding: 0 10px 20px;
+}
+
+.search-books-help {
+  padding: 80px 20px 5px;
+}
+
+.search-books-heading {
+  font-size: 1.1em;
+  line-height: 1.3em;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.search-books-terms {
+  color: #555;
+  font-size: 0.85em;
+  line-height: 1.3em;
+  font-style: italic;
+}
+
+.search-not-valid {
+  color: #cc0000;
 }
 
 /* books grid */
