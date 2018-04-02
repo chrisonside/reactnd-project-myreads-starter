@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Results from './Results'
-import sortBy from 'sort-by'
 import * as BooksAPI from './utils/BooksAPI'
 
 const TYPING_FINISHED_DELAY = 800;
