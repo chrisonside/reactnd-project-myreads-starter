@@ -39,6 +39,14 @@ class Book extends Component {
 		return bgImageURL
 	}
 
+	/*
+		* Function handles situation where book does not have an author
+		* Returns string of authors or back up text
+	*/
+	handleAuthor = (book) => {
+		return typeof book.authors === 'undefined' ? 'TBC' : book.authors.join(', ');
+	}
+
 	render() {
 
 		const { currentBook, onAddBook, options } = this.props
@@ -61,6 +69,7 @@ class Book extends Component {
 			      </div>
 			    </div>
 			    <div className='book-title'>{currentBook.title}</div>
+			    <div className='book-authors'>{this.handleAuthor(currentBook)}</div>
 			  </div>
 			</li>
 		)
