@@ -5,6 +5,8 @@ import Results from './Results'
 import sortBy from 'sort-by'
 import * as BooksAPI from './utils/BooksAPI'
 
+const TYPING_FINISHED_DELAY = 800;
+
 class SearchBooks extends Component {
 
 	static propTypes = {
@@ -17,11 +19,13 @@ class SearchBooks extends Component {
 
 	state = {
 		query: '',
+		timer: null,
 		results: []
 	}
 
 	/*
-    * This function is used to search the approved terms, to see if the input query is a valid search term
+    * Function searches data for a specific string
+    * Returns a boolean (true if string exists in data)
   */
 	searchArray = (query, data) => {
 		let searchTerm = query.toLowerCase();
@@ -41,33 +45,29 @@ class SearchBooks extends Component {
 	}
 
 	/*
-	 *	Function returns API search results, but if any books are in a shelf already, add their shelf property
+	 *	Function loops through searchResults and if any books are in a shelf already, that shelf property is added
+	 *	Returns updated searchResults
 	*/
 	mergeObjectArrays = (books, searchResults) => {
-		// Loop through books in my search searchResults (where we will know there will be a max of 20 searchResults)
 		searchResults.map((searchResult) => {
-
-			// For each search result, loop through the current bookhself books and see if there's a match
+			// For each search result, loop through the current bookshelf books and see if there's a match
 			let bookMatch = books.filter((book) => {
 				return searchResult.id === book.id
 			})
-
 			// If there is a match, add that shelf property to this search result
 			if(bookMatch.length > 0) {
 				searchResult['shelf'] = bookMatch[0].shelf
 			}
-
 		})
-
 		return searchResults
 	}
 
 	/*
-    * Function to handle the form input changing and set component's state accordingly
+    * Function to update component's query state based on latest user input
   */
-	updateQuery = (event) => {
+	handleQueryUpdate = (event) => {
 		let query;
-		// Handle keyups - only deal with backspace being hit on the keydowns
+		// Deal with backspace being hit on the keydowns
 		if(event.type === 'keydown') {
 			if(event.keyCode === 8) {
 				event.preventDefault();
@@ -77,22 +77,29 @@ class SearchBooks extends Component {
 				return;
 			}
 		} else {
-			// Handle onchange
+			// Handle onchange events
 			query = event.target.value;
 		}
 
-		// So if the user has typed something into our input box, meaning our this.state.query is truthy...
-		// And if it's an approved search term...
+		this.setState({	query })
+
+		return;
+	}
+
+
+	/*
+    * Function to update component's results state based on user input
+  */
+	updateResults = (event) => {
+		let query = this.state.query;
+		// If the user has typed something in input field, meaning this.state.query is truthy
+		// And if that query is an approved search term
 		if (query && this.searchArray(query, this.props.approvedSearchTerms) ) {
-			this.setState({	query })
 			// Search the Books API
 			BooksAPI.search(query).then((response) => {
-				// The books returned from the BooksAPI search don't have any shelf property.
-				// So cross reference the search API books against the current bookshelf books
-				// If the search results books already have a shelf property, assign it, or set to none
+				// As returned books don't have shelf property, cross reference them against current bookshelf books
 				response = this.mergeObjectArrays(this.props.books, response)
-
-				// Finally update this component's state with the results, and trigger a render via set.state
+				// Finally update this component's state with the results and trigger re-render
 				this.setState({
 					results: response
 				})
@@ -100,11 +107,25 @@ class SearchBooks extends Component {
 			// }
 		} else {
 			this.setState({
-				query: query,
 				results: []
 			})
 		}
 	}
+
+	/*
+    * Function to handle the form input changing
+    * Function updates query state immediately, and results once user has stopped typing
+  */
+	handleInputChange(event) {
+		// If user has added to input since we last started our (handling input change)setTimeout, cancel that setTimeOut
+		clearTimeout(this.state.timer);
+
+		// Update component's query state
+		this.handleQueryUpdate(event);
+
+		// If our timeout limit has passed, assume user has finished typing and show results
+		this.state.timer = setTimeout(this.updateResults.bind(event), TYPING_FINISHED_DELAY);
+  }
 
 	render() {
 
@@ -125,8 +146,8 @@ class SearchBooks extends Component {
 				      	type="text"
 				      	placeholder="Search by title or author"
 								value={query}
-								onChange={ (event) => this.updateQuery(event) }
-								onKeyDown={ (event) => this.updateQuery(event) }
+								onChange={ (event) => this.handleInputChange(event) }
+								onKeyDown={ (event) => this.handleInputChange(event) }
 				      />
 				    </div>
 				  </div>
