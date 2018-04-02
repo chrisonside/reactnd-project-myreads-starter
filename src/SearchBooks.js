@@ -130,7 +130,9 @@ class SearchBooks extends Component {
 		this.handleQueryUpdate(event);
 
 		// If our timeout limit has passed, assume user has finished typing and show results
-		this.state.timer = setTimeout(this.updateResults.bind(event), TYPING_FINISHED_DELAY);
+		this.setState({
+			timer: setTimeout(this.updateResults.bind(event), TYPING_FINISHED_DELAY)
+		})
   }
 
 	render() {
