@@ -172,7 +172,7 @@ class SearchBooks extends Component {
 							{/* Bind input value to the query property in components state */}
 				      <input
 				      	type='text'
-				      	placeholder='Search by title or author'
+								placeholder='Search by subject'
 								value={query}
 								onChange={ (event) => this.handleInputChange(event) }
 								onKeyDown={ (event) => this.handleInputChange(event) }
