@@ -5,9 +5,7 @@ import SearchBooks from './SearchBooks';
 import * as BooksAPI from './utils/BooksAPI';
 
 class BooksApp extends Component {
-	/*
-		*	Populate state's book shelf books data once API has been called
-	*/
+
 	state = {
 		books: [],
 		dataLoading: false,
@@ -24,7 +22,7 @@ class BooksApp extends Component {
 	}
 
 	/*
-		* Function to call the Books API and update our app's state with books data
+		* Function to call the Books API and update our app's state with the latest books data
 	*/
 	getAllBooksData() {
 		BooksAPI.getAll().then((books) => {
@@ -53,9 +51,9 @@ class BooksApp extends Component {
 	};
 
 	/*
-		* Function is called when user has used the dropdown tool to add a book to a shelf
-		* First call the Book API to update the API as to the new shelf the book has been moved to
-		* Once the book has been added, refetch the books API data and update our app's state, which will trigger a re-render.
+		* Function called when user selects shelf for a book
+		* First call the Books API to update the book with the new shelf property
+		* Then refetch the books API data and update our app's state, which will trigger a re-render.
 	*/
 	onAddBook = (book, shelf) => {
 		BooksAPI.update(book, shelf).then(() => {

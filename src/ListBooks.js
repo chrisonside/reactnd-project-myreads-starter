@@ -17,8 +17,8 @@ class ListBooks extends Component {
 	}
 
 	/*
-		* This function loops through an array of objects (in this case our book API data), and for each object, examines the propToSeek (in this case the 'shelf' property), and creates/updates the relevant property in the returned object.
-		* In this case, the returned object's keys are the shelf names, and the array values for each key are populated by objects for each book that belongs to that shelf.
+		* This function returns an object whose keys are the shelf names.
+		* The corresponding value for each key is an array made up of book objects that belong to that shelf
 	*/
 	groupBy = (myArray, propToSeek) => {
 		const groupedData = {};
@@ -33,7 +33,6 @@ class ListBooks extends Component {
 	/*
 		* Ciphen off books into individual shelves (itemsByCategory)
 		* Then grab all the different shelf titles, and for each one, return UI for that shelf title
-		* Each Shelf component created will go on to request the UI for each Book component that appears on the Shelf
 	*/
 	renderList = (data, category) => {
 			const itemsByCategory = this.groupBy(data, category);
@@ -66,7 +65,7 @@ class ListBooks extends Component {
 							<img className='error__logo' src={errorImage} width='150' alt='Error'/>
 						</div>
 	        )}
-					{(dataLoading && errorMessage.length === 0) &&(
+					{(dataLoading && errorMessage.length === 0) && (
 						<div className='loading'>
 							<h3 className='loading__header'>Retrieving books...</h3>
 							<img className='loading__logo' src={loadingImage} width='150' alt='Loading'/>

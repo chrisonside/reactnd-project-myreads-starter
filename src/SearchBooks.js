@@ -50,7 +50,7 @@ class SearchBooks extends Component {
 
 	/*
 	 *	Function loops through searchResults and if any books are in a shelf already, that shelf property is added
-	 *	Returns updated searchResults
+	 *	Returns updated searchResults array
 	*/
 	mergeObjectArrays = (books, searchResults) => {
 		searchResults.map((searchResult) => {
@@ -79,9 +79,9 @@ class SearchBooks extends Component {
 				event.preventDefault();
 				query = this.state.query.slice(0, -1);
 				// TODO: handle user pressing backspace when cursor is not at end of cursor string
-				// TODO: handle user selecting > 1 letter and pressing backspace
+				// TODO: handle user selecting > 1 text character and pressing backspace
 			} else {
-				// For all other keydown events we want to ignore these
+				// For all other keydown events we want to ignore these for now
 				return;
 			}
 		} else {
@@ -127,7 +127,6 @@ class SearchBooks extends Component {
 					errorMessage: 'Sorry, there is a problem retrieving books. Please try again later.'
 				})
 			})
-			// }
 		} else {
 			this.setState({
 				validSearch: 'search-not-valid',
@@ -138,10 +137,10 @@ class SearchBooks extends Component {
 
 	/*
     * Function to handle the form input changing
-    * Function updates query state immediately, and results once user has stopped typing
+    * Function updates query state immediately, and updates results once user has stopped typing
   */
 	handleInputChange = (event)  => {
-		// If user has added to input since we last started our (handling input change)setTimeout, cancel that setTimeOut
+		// If user has added to input since we last started our (handling input change) setTimeout, cancel that setTimeOut
 		clearTimeout(this.state.timer);
 
 		// Update component's query state
@@ -158,7 +157,7 @@ class SearchBooks extends Component {
 		const { onAddBook, options, approvedSearchTerms, makeReadable } = this.props;
 		const { query, results, validSearch, dataLoading, errorMessage } = this.state;
 
-		// Ready approved search terms for displaying to user
+		// Prepare approved search terms for displaying to user
 		const terms = approvedSearchTerms.join(', ');
 
 		return (

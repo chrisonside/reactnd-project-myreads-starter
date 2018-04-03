@@ -14,7 +14,6 @@ class Shelf extends Component {
 
 	render() {
 
-		// Descructure props object for easier reading
 		const {shelfTitle, booksOnShelf, onAddBook, options, makeReadable} = this.props;
 
 		return (

@@ -4,7 +4,6 @@ import backUpImage from './img/coming-soon.jpg';
 
 class Book extends Component {
 
-	// Set up PropTypes config
 	static propTypes = {
 		currentBook: PropTypes.object.isRequired,
 		onAddBook: PropTypes.func.isRequired,
@@ -30,7 +29,7 @@ class Book extends Component {
 	};
 
 	/*
-		* Function handles user selecting shelf for a book from select options
+		* Function handles user selecting shelf for a book via select options
 	*/
 	handleOptionChange = (event) => {
 		let selectedValue = event.target.value;
