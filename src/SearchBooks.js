@@ -164,10 +164,10 @@ class SearchBooks extends Component {
       <div>
         <div className='search-books'>
           <div className='search-books-bar'>
-          <Link
-          to='/'
-          className='close-search'
-        >Back to home page</Link>
+            <Link
+              to='/'
+              className='close-search'
+            >Back to home page</Link>
             <div className='search-books-input-wrapper'>
               {/* Bind input value to the query property in components state */}
               <input

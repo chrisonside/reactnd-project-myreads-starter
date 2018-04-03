@@ -76,7 +76,7 @@ class Book extends Component {
             }}></div>
             <div className='book-shelf-changer'>
               <select value={this.state.value} onChange={(event) => this.handleOptionChange(event)}>
-              <option value='none' disabled>Move to...</option>
+                <option value='none' disabled>Move to...</option>
                 {this.renderOptions(options)}
               </select>
             </div>
