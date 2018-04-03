@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
-import Book from './Book'
+import PropTypes from 'prop-types';
+import Book from './Book';
 
 class Shelf extends Component {
 
@@ -15,7 +15,7 @@ class Shelf extends Component {
 	render() {
 
 		// Descructure props object for easier reading
-		const {shelfTitle, booksOnShelf, onAddBook, options, makeReadable} = this.props
+		const {shelfTitle, booksOnShelf, onAddBook, options, makeReadable} = this.props;
 
 		return (
 			<div>
@@ -41,4 +41,4 @@ class Shelf extends Component {
 	}
 }
 
-export default Shelf
+export default Shelf;

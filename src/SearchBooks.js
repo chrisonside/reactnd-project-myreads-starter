@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import Results from './Results'
-import * as BooksAPI from './utils/BooksAPI'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import Results from './Results';
+import * as BooksAPI from './utils/BooksAPI';
 import loadingImage from './img/loading.png';
 import errorImage from './img/error.png';
 
@@ -33,7 +33,7 @@ class SearchBooks extends Component {
   */
 	searchArray = (query, data) => {
 		let searchTerm = query.toLowerCase();
-		var index = -1;
+		let index = -1;
 
 		data.some( (element, i)  => {
     	if ( searchTerm === element ) {
@@ -42,11 +42,11 @@ class SearchBooks extends Component {
 		})
 
 		if(index !== -1) {
-			return true
+			return true;
 		} else {
-			return false
+			return false;
 		}
-	}
+	};
 
 	/*
 	 *	Function loops through searchResults and if any books are in a shelf already, that shelf property is added
@@ -56,17 +56,17 @@ class SearchBooks extends Component {
 		searchResults.map((searchResult) => {
 			// For each search result, loop through the current bookshelf books and see if there's a match
 			let bookMatch = books.filter((book) => {
-				return searchResult.id === book.id
+				return searchResult.id === book.id;
 			})
 			// If there is a match, add that shelf property to this search result, else set to none
 			if(bookMatch.length > 0) {
-				searchResult['shelf'] = bookMatch[0].shelf
+				searchResult['shelf'] = bookMatch[0].shelf;
 			} else {
-				searchResult['shelf'] = 'none'
+				searchResult['shelf'] = 'none';
 			}
 		})
-		return searchResults
-	}
+		return searchResults;
+	};
 
 	/*
     * Function to update component's query state based on latest user input
@@ -95,7 +95,7 @@ class SearchBooks extends Component {
 		})
 
 		return;
-	}
+	};
 
 
 	/*
@@ -107,11 +107,11 @@ class SearchBooks extends Component {
 		// And if that query is an approved search term
 		if (query && this.searchArray(query, this.props.approvedSearchTerms) ) {
 			// Show the loading spinner
-			this.setState({ dataLoading: true })
+			this.setState({ dataLoading: true });
 			// Search the Books API
 			BooksAPI.search(query).then((response) => {
 				// As returned books don't have shelf property, cross reference them against current bookshelf books
-				response = this.mergeObjectArrays(this.props.books, response)
+				response = this.mergeObjectArrays(this.props.books, response);
 				// Finally update this component's state with the results, hide the spinner and trigger re-render
 				this.setState({
 					validSearch: 'search-is-valid',
@@ -132,13 +132,13 @@ class SearchBooks extends Component {
 				results: []
 			})
 		}
-	}
+	};
 
 	/*
     * Function to handle the form input changing
     * Function updates query state immediately, and results once user has stopped typing
   */
-	handleInputChange(event) {
+	handleInputChange = (event)  => {
 		// If user has added to input since we last started our (handling input change)setTimeout, cancel that setTimeOut
 		clearTimeout(this.state.timer);
 
@@ -149,29 +149,29 @@ class SearchBooks extends Component {
 		this.setState({
 			timer: setTimeout(this.updateResults.bind(event), TYPING_FINISHED_DELAY)
 		})
-  }
+  };
 
 	render() {
 
-		const { onAddBook, options, approvedSearchTerms, makeReadable } = this.props
-		const { query, results, validSearch, dataLoading, errorMessage } = this.state
+		const { onAddBook, options, approvedSearchTerms, makeReadable } = this.props;
+		const { query, results, validSearch, dataLoading, errorMessage } = this.state;
 
 		// Ready approved search terms for displaying to user
 		const terms = approvedSearchTerms.join(', ');
 
 		return (
 			<div>
-				<div className="search-books">
-				  <div className="search-books-bar">
+				<div className='search-books'>
+				  <div className='search-books-bar'>
 				  <Link
-					to="/"
-					className="close-search"
+					to='/'
+					className='close-search'
 				>Back to home page</Link>
-				    <div className="search-books-input-wrapper">
+				    <div className='search-books-input-wrapper'>
 							{/* Bind input value to the query property in components state */}
 				      <input
-				      	type="text"
-				      	placeholder="Search by title or author"
+				      	type='text'
+				      	placeholder='Search by title or author'
 								value={query}
 								onChange={ (event) => this.handleInputChange(event) }
 								onKeyDown={ (event) => this.handleInputChange(event) }
@@ -179,20 +179,20 @@ class SearchBooks extends Component {
 				    </div>
 				  </div>
 				</div>
-			  <div className="search-books-help">
+			  <div className='search-books-help'>
 					<h2 className={validSearch + ' search-books-heading'}>The following search terms are valid:</h2>
-      		<div className="search-books-terms">{terms}</div>
+      		<div className='search-books-terms'>{terms}</div>
       	</div>
       	{errorMessage.length > 0 && (
-					<div className="error">
-						<h3 className="error__header">{errorMessage}</h3>
-						<img className="error__logo" src={errorImage} width="150" alt="Error"/>
+					<div className='error'>
+						<h3 className='error__header'>{errorMessage}</h3>
+						<img className='error__logo' src={errorImage} width='150' alt='Error'/>
 					</div>
         )}
 				{(dataLoading && errorMessage.length === 0) && (
-					<div className="loading">
-						<h3 className="loading__header">Retrieving books...</h3>
-						<img className="loading__logo" src={loadingImage} width="150" alt="Loading"/>
+					<div className='loading'>
+						<h3 className='loading__header'>Retrieving books...</h3>
+						<img className='loading__logo' src={loadingImage} width='150' alt='Loading'/>
 					</div>
         )}
 				{results.length > 0 && (
@@ -208,4 +208,4 @@ class SearchBooks extends Component {
 	}
 }
 
-export default SearchBooks
+export default SearchBooks;

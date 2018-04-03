@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import backUpImage from './img/coming-soon.jpg';
 
 class Book extends Component {
@@ -27,18 +27,18 @@ class Book extends Component {
 				value={option}>{this.props.makeReadable(option)}
 			</option>
 		))
-	}
+	};
 
 	/*
 		* Function handles user selecting shelf for a book from select options
 	*/
 	handleOptionChange = (event) => {
-		let selectedValue = event.target.value
+		let selectedValue = event.target.value;
 		// Update UI to reflect chosen shelf
-		this.setState({ value: selectedValue })
+		this.setState({ value: selectedValue });
 		// Add book to shelf and the Books API
-		this.props.onAddBook(this.props.currentBook, selectedValue)
-	}
+		this.props.onAddBook(this.props.currentBook, selectedValue);
+	};
 
 	/*
 		* Function handles situation where book does not have a thumbnail
@@ -47,12 +47,12 @@ class Book extends Component {
 	handleBgImage = (book) => {
 		let bgImageURL;
 		if(typeof book.imageLinks === 'undefined') {
-			bgImageURL = `url(${backUpImage})`
+			bgImageURL = `url(${backUpImage})`;
 		} else {
-			bgImageURL = `url(${book.imageLinks.thumbnail})`
+			bgImageURL = `url(${book.imageLinks.thumbnail})`;
 		}
-		return bgImageURL
-	}
+		return bgImageURL;
+	};
 
 	/*
 		* Function handles situation where book does not have an author
@@ -60,11 +60,11 @@ class Book extends Component {
 	*/
 	handleAuthor = (book) => {
 		return typeof book.authors === 'undefined' ? 'TBC' : book.authors.join(', ');
-	}
+	};
 
 	render() {
 
-		const { currentBook, options } = this.props
+		const { currentBook, options } = this.props;
 
 		return(
 			<li>
@@ -90,4 +90,4 @@ class Book extends Component {
 	}
 }
 
-export default Book
+export default Book;

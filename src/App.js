@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
-import ListBooks from './ListBooks'
-import SearchBooks from './SearchBooks'
-import * as BooksAPI from './utils/BooksAPI'
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
+import ListBooks from './ListBooks';
+import SearchBooks from './SearchBooks';
+import * as BooksAPI from './utils/BooksAPI';
 
 class BooksApp extends Component {
 	/*
@@ -19,8 +19,8 @@ class BooksApp extends Component {
 	*/
 	componentDidMount() {
 		// Show the loading spinner
-		this.setState({ dataLoading: true })
-		this.getAllBooksData()
+		this.setState({ dataLoading: true });
+		this.getAllBooksData();
 	}
 
 	/*
@@ -32,9 +32,9 @@ class BooksApp extends Component {
 				books: books,
 				dataLoading: false,
 				errorMessage: ''
-			})
+			});
 		}).catch(error => {
-			this.setState({ errorMessage: 'Sorry, there is a problem retrieving your books. Please try again later.' })
+			this.setState({ errorMessage: 'Sorry, there is a problem retrieving your books. Please try again later.' });
 		})
 	}
 
@@ -49,8 +49,8 @@ class BooksApp extends Component {
 				// space before last upper in a sequence followed by lower
 				.replace(/\b([A-Z]+)([A-Z])([a-z])/, '$1 $2$3')
 				// uppercase the first character
-				.replace(/^./, function(str){ return str.toUpperCase(); })
-	}
+				.replace(/^./, function(str){ return str.toUpperCase(); });
+	};
 
 	/*
 		* Function is called when user has used the dropdown tool to add a book to a shelf
@@ -59,24 +59,24 @@ class BooksApp extends Component {
 	*/
 	onAddBook = (book, shelf) => {
 		BooksAPI.update(book, shelf).then(() => {
-			this.getAllBooksData()
-		})
-	}
+			this.getAllBooksData();
+		});
+	};
 
 	render() {
 
-		const { books, dataLoading, errorMessage } = this.state
+		const { books, dataLoading, errorMessage } = this.state;
 
 		// Set shelf names for our app
-		const options = ['currentlyReading', 'wantToRead', 'read', 'none']
+		const options = ['currentlyReading', 'wantToRead', 'read', 'none'];
 
-		const approvedSearchTerms = ['Android', 'Art', 'Artificial Intelligence', 'Astronomy', 'Austen', 'Baseball', 'Basketball', 'Bhagat', 'Biography', 'Brief', 'Business', 'Camus', 'Cervantes', 'Christie', 'Classics', 'Comics', 'Cook', 'Cricket', 'Cycling', 'Desai', 'Design', 'Development', 'Digital Marketing', 'Drama', 'Drawing', 'Dumas', 'Education', 'Everything', 'Fantasy', 'Film', 'Finance', 'First', 'Fitness', 'Football', 'Future', 'Games', 'Gandhi', 'Homer', 'Horror', 'Hugo', 'Ibsen', 'Journey', 'Kafka', 'King', 'Lahiri', 'Larsson', 'Learn', 'Literary Fiction', 'Make', 'Manage', 'Marquez', 'Money', 'Mystery', 'Negotiate', 'Painting', 'Philosophy', 'Photography', 'Poetry', 'Production', 'Programming', 'React', 'Redux', 'River', 'Robotics', 'Rowling', 'Satire', 'Science Fiction', 'Shakespeare', 'Singh', 'Swimming', 'Tale', 'Thrun', 'Time', 'Tolstoy', 'Travel', 'Ultimate', 'Virtual Reality', 'Web Development', 'iOS']
+		const approvedSearchTerms = ['Android', 'Art', 'Artificial Intelligence', 'Astronomy', 'Austen', 'Baseball', 'Basketball', 'Bhagat', 'Biography', 'Brief', 'Business', 'Camus', 'Cervantes', 'Christie', 'Classics', 'Comics', 'Cook', 'Cricket', 'Cycling', 'Desai', 'Design', 'Development', 'Digital Marketing', 'Drama', 'Drawing', 'Dumas', 'Education', 'Everything', 'Fantasy', 'Film', 'Finance', 'First', 'Fitness', 'Football', 'Future', 'Games', 'Gandhi', 'Homer', 'Horror', 'Hugo', 'Ibsen', 'Journey', 'Kafka', 'King', 'Lahiri', 'Larsson', 'Learn', 'Literary Fiction', 'Make', 'Manage', 'Marquez', 'Money', 'Mystery', 'Negotiate', 'Painting', 'Philosophy', 'Photography', 'Poetry', 'Production', 'Programming', 'React', 'Redux', 'River', 'Robotics', 'Rowling', 'Satire', 'Science Fiction', 'Shakespeare', 'Singh', 'Swimming', 'Tale', 'Thrun', 'Time', 'Tolstoy', 'Travel', 'Ultimate', 'Virtual Reality', 'Web Development', 'iOS'];
 
 		// Convert our approved API search terms to lower case for easier comparison with search query
-		const lowerCaseSearchTerms = []
+		const lowerCaseSearchTerms = [];
 		approvedSearchTerms.map( (term) => {
-			lowerCaseSearchTerms.push( term.toLowerCase() )
-		})
+			lowerCaseSearchTerms.push( term.toLowerCase() );
+		});
 
 		return (
 			<div className='app'>
@@ -108,4 +108,4 @@ class BooksApp extends Component {
 	}
 }
 
-export default BooksApp
+export default BooksApp;
