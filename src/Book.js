@@ -9,7 +9,11 @@ class Book extends Component {
 		currentBook: PropTypes.object.isRequired,
 		onAddBook: PropTypes.func.isRequired,
 		makeReadable: PropTypes.func.isRequired,
-		options: PropTypes.array.isRequired,
+		options: PropTypes.array.isRequired
+	}
+
+	state = {
+		value: this.props.currentBook.shelf
 	}
 
 	/*
@@ -23,6 +27,17 @@ class Book extends Component {
 				value={option}>{this.props.makeReadable(option)}
 			</option>
 		))
+	}
+
+	/*
+		* Function handles user selecting shelf for a book from select options
+	*/
+	handleOptionChange = (event) => {
+		let selectedValue = event.target.value
+		// Update UI to reflect chosen shelf
+		this.setState({ value: selectedValue })
+		// Add book to shelf and the Books API
+		this.props.onAddBook(this.props.currentBook, selectedValue)
 	}
 
 	/*
@@ -49,7 +64,7 @@ class Book extends Component {
 
 	render() {
 
-		const { currentBook, onAddBook, options } = this.props
+		const { currentBook, options } = this.props
 
 		return(
 			<li>
@@ -58,11 +73,10 @@ class Book extends Component {
 			      <div className='book-cover' style={{
 			      	width: 128,
 			      	height: 193,
-			      	// backgroundImage: `url(${backUpImage})`
 			      	backgroundImage: this.handleBgImage(currentBook)
 			      }}></div>
 			      <div className='book-shelf-changer'>
-			        <select value={currentBook.shelf} onChange={(event) => onAddBook(currentBook, event.target.value)}>
+			        <select value={this.state.value} onChange={(event) => this.handleOptionChange(event)}>
 			          <option value='none' disabled>Move to...</option>
 			          {this.renderOptions(options)}
 			        </select>
