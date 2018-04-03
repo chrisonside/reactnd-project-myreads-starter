@@ -9,7 +9,14 @@ This React project uses [Create React App](https://github.com/facebookincubator/
 
 This is a bookshelf app which allows you to select and categorise books into different book shelves - **read**, **currently reading** and **want to read**. You can also search the client library to add new books to your shelves.
 
-The project provides an API server and client library - methods for interacting with the API are detailed below and are used to ensure that your book shelf choices are updated and stored across your interactions with the app.
+The project provides an API server and client library - methods for interacting with the API are detailed below and are used in the code to ensure that your book shelf choices are updated and stored across your interactions with the app.
+
+There are several efforts made to improve the user experience, such as:
+
+* displaying a loading icon whilst data is being retrieved from the client library
+* displaying an error message if the app can't retrieve data from the client library
+* waiting for the user to stop typing before handling their search query
+* using colour to give the user a gentle visual nudge when their search term isn't included in the approved list
 
 ## To install and launch the app:
 
