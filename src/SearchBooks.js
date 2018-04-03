@@ -106,15 +106,17 @@ class SearchBooks extends Component {
 		// If the user has typed something in input field, meaning this.state.query is truthy
 		// And if that query is an approved search term
 		if (query && this.searchArray(query, this.props.approvedSearchTerms) ) {
-			// Show the loading spinner
-			this.setState({ dataLoading: true });
+			// Show the loading spinner and remove the error color on the terms prompt
+			this.setState({
+				dataLoading: true,
+				validSearch: 'search-is-valid'
+			});
 			// Search the Books API
 			BooksAPI.search(query).then((response) => {
 				// As returned books don't have shelf property, cross reference them against current bookshelf books
 				response = this.mergeObjectArrays(this.props.books, response);
 				// Finally update this component's state with the results, hide the spinner and trigger re-render
 				this.setState({
-					validSearch: 'search-is-valid',
 					results: response,
 					dataLoading: false,
 					errorMessage: ''
