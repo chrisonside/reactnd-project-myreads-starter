@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Results from './Results'
 import * as BooksAPI from './utils/BooksAPI'
+import loadingImage from './img/loading.png';
 
 const TYPING_FINISHED_DELAY = 800;
 
@@ -20,7 +21,8 @@ class SearchBooks extends Component {
 		query: '',
 		validSearch: 'search-is-valid',
 		timer: null,
-		results: []
+		results: [],
+		dataLoading: false
 	}
 
 	/*
@@ -99,14 +101,17 @@ class SearchBooks extends Component {
 		// If the user has typed something in input field, meaning this.state.query is truthy
 		// And if that query is an approved search term
 		if (query && this.searchArray(query, this.props.approvedSearchTerms) ) {
+			// Show the loading spinner
+			this.setState({ dataLoading: true })
 			// Search the Books API
 			BooksAPI.search(query).then((response) => {
 				// As returned books don't have shelf property, cross reference them against current bookshelf books
 				response = this.mergeObjectArrays(this.props.books, response)
-				// Finally update this component's state with the results and trigger re-render
+				// Finally update this component's state with the results, hide the spinner and trigger re-render
 				this.setState({
 					validSearch: 'search-is-valid',
-					results: response
+					results: response,
+					dataLoading: false
 				})
 			})
 			// }
@@ -137,8 +142,8 @@ class SearchBooks extends Component {
 
 	render() {
 
-		const { books, onAddBook, options, approvedSearchTerms, makeReadable } = this.props
-		const { query, results, validSearch } = this.state
+		const { onAddBook, options, approvedSearchTerms, makeReadable } = this.props
+		const { query, results, validSearch, dataLoading } = this.state
 
 		// Ready approved search terms for displaying to user
 		const terms = approvedSearchTerms.join(', ');
@@ -163,13 +168,16 @@ class SearchBooks extends Component {
 				    </div>
 				  </div>
 				</div>
-				{/* Useful for debugging
-			  	{JSON.stringify(this.state)}
-			  */}
 			  <div className="search-books-help">
 					<h2 className={validSearch + ' search-books-heading'}>The following search terms are valid:</h2>
       		<div className="search-books-terms">{terms}</div>
       	</div>
+				{dataLoading && (
+					<div className="loading">
+						<h3 className="loading__header">Searching library...</h3>
+						<img className="loading__logo" src={loadingImage} width="150" alt="Loading"/>
+					</div>
+        )}
 				{results.length > 0 && (
         	<Results
 						results={results}
