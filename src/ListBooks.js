@@ -60,7 +60,7 @@ class ListBooks extends Component {
 					</div>
 					{dataLoading && (
 						<div className="loading">
-							<h3 className="loading__header">Searching library...</h3>
+							<h3 className="loading__header">Retrieving books...</h3>
 							<img className="loading__logo" src={loadingImage} width="150" alt="Loading"/>
 						</div>
 	        )}
