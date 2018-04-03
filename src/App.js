@@ -10,7 +10,8 @@ class BooksApp extends Component {
 	*/
 	state = {
 		books: [],
-		dataLoading: false
+		dataLoading: false,
+		errorMessage: ''
 	}
 
 	/*
@@ -29,8 +30,11 @@ class BooksApp extends Component {
 		BooksAPI.getAll().then((books) => {
 			this.setState({
 				books: books,
-				dataLoading: false
+				dataLoading: false,
+				errorMessage: ''
 			})
+		}).catch(error => {
+			this.setState({ errorMessage: 'Sorry, there was a problem retrieving your books. Please try again later.' })
 		})
 	}
 
@@ -61,7 +65,7 @@ class BooksApp extends Component {
 
 	render() {
 
-		const { books, dataLoading } = this.state
+		const { books, dataLoading, errorMessage } = this.state
 
 		// Set shelf names for our app
 		const options = ['currentlyReading', 'wantToRead', 'read', 'none']
@@ -85,6 +89,7 @@ class BooksApp extends Component {
 						options={options}
 						makeReadable={this.makeReadable}
 						dataLoading={dataLoading}
+						errorMessage={errorMessage}
 					/>
 				)}/>
 

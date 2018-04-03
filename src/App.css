@@ -137,6 +137,18 @@ body, .app {
   color: #ff6700;
 }
 
+/* error message */
+
+.error {
+  padding: 0 20px;
+  text-align: center;
+}
+
+.error__header {
+  margin-bottom: 0;
+  color: #cc0000;
+}
+
 /* books grid */
 
 .books-grid {

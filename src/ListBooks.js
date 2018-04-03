@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Shelf from './Shelf'
 import loadingImage from './img/loading.png';
+import errorImage from './img/error.png';
 
 class ListBooks extends Component {
 
@@ -11,7 +12,8 @@ class ListBooks extends Component {
 		onAddBook: PropTypes.func.isRequired,
 		options: PropTypes.array.isRequired,
 		makeReadable: PropTypes.func.isRequired,
-		dataLoading: PropTypes.bool.isRequired
+		dataLoading: PropTypes.bool.isRequired,
+		errorMessage: PropTypes.string.isRequired
 	}
 
 	/*
@@ -50,7 +52,7 @@ class ListBooks extends Component {
 
 	render() {
 
-		const { books, dataLoading } = this.props
+		const { books, dataLoading, errorMessage } = this.props
 
 		return (
 			<div>
@@ -58,7 +60,13 @@ class ListBooks extends Component {
 					<div className='list-books-title'>
 					  <h1>MyReads</h1>
 					</div>
-					{dataLoading && (
+					{errorMessage.length > 0 && (
+						<div className="error">
+							<h3 className="error__header">{errorMessage}</h3>
+							<img className="error__logo" src={errorImage} width="150" alt="Error"/>
+						</div>
+	        )}
+					{(dataLoading && errorMessage.length === 0) &&(
 						<div className="loading">
 							<h3 className="loading__header">Retrieving books...</h3>
 							<img className="loading__logo" src={loadingImage} width="150" alt="Loading"/>
