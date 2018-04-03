@@ -34,7 +34,7 @@ class BooksApp extends Component {
 				errorMessage: ''
 			})
 		}).catch(error => {
-			this.setState({ errorMessage: 'Sorry, there was a problem retrieving your books. Please try again later.' })
+			this.setState({ errorMessage: 'Sorry, there is a problem retrieving your books. Please try again later.' })
 		})
 	}
 
