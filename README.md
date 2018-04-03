@@ -1,15 +1,15 @@
 
 # MyReads Project
 
-## Summary
-
-This is a bookshelf app which is a student project on the [Udacity React Nanodegree](https://eu.udacity.com/course/react-nanodegree--nd019).
-
-This app allows you to select and categorise books into different book shelves - **read**, **currently reading** and **want to read**. You can also search the client library to add new books to your shelves.
-
-The project provides an API server and client library - methods for interacting with the API are detailed below and are used to ensure that your book shelf choices are updated and stored across your interactions with the app.
+This is a project completed as part of the [Udacity React Nanodegree](https://eu.udacity.com/course/react-nanodegree--nd019).
 
 This React project uses [Create React App](https://github.com/facebookincubator/create-react-app) to bootstrap the project.
+
+## Summary
+
+This is a bookshelf app which allows you to select and categorise books into different book shelves - **read**, **currently reading** and **want to read**. You can also search the client library to add new books to your shelves.
+
+The project provides an API server and client library - methods for interacting with the API are detailed below and are used to ensure that your book shelf choices are updated and stored across your interactions with the app.
 
 ## To install and launch the app:
 
