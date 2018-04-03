@@ -125,6 +125,18 @@ body, .app {
   color: #cc0000;
 }
 
+/* loading section */
+
+.loading {
+  padding: 0 20px;
+  text-align: center;
+}
+
+.loading__header {
+  margin-bottom: 0;
+  color: #ff6700;
+}
+
 /* books grid */
 
 .books-grid {

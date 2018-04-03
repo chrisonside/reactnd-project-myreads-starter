@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Shelf from './Shelf'
+import loadingImage from './img/loading.png';
 
 class ListBooks extends Component {
 
@@ -9,7 +10,8 @@ class ListBooks extends Component {
 		books: PropTypes.array.isRequired,
 		onAddBook: PropTypes.func.isRequired,
 		options: PropTypes.array.isRequired,
-		makeReadable: PropTypes.func.isRequired
+		makeReadable: PropTypes.func.isRequired,
+		dataLoading: PropTypes.bool.isRequired
 	}
 
 	/*
@@ -48,24 +50,30 @@ class ListBooks extends Component {
 
 	render() {
 
+		const { books, dataLoading } = this.props
+
 		return (
 			<div>
 				<div className='list-books'>
 					<div className='list-books-title'>
 					  <h1>MyReads</h1>
 					</div>
+					{dataLoading && (
+						<div className="loading">
+							<h3 className="loading__header">Searching library...</h3>
+							<img className="loading__logo" src={loadingImage} width="150" alt="Loading"/>
+						</div>
+	        )}
 					<div className='list-books-content'>
-						{this.renderList(this.props.books, `shelf`)}
+						{this.renderList(books, `shelf`)}
 					</div>
 				</div>
-
 				<div className='open-search'>
 					<Link
 						to='/search'
 						>Add a book</Link>
 				</div>
 			</div>
-
 		)
 	}
 }
