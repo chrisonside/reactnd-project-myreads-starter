@@ -67,23 +67,23 @@ class Book extends Component {
 
 		return(
 			<li>
-			  <div className='book'>
-			    <div className='book-top'>
-			      <div className='book-cover' style={{
-			      	width: 128,
-			      	height: 193,
-			      	backgroundImage: this.handleBgImage(currentBook)
-			      }}></div>
-			      <div className='book-shelf-changer'>
-			        <select value={this.state.value} onChange={(event) => this.handleOptionChange(event)}>
-			          <option value='none' disabled>Move to...</option>
-			          {this.renderOptions(options)}
-			        </select>
-			      </div>
-			    </div>
-			    <div className='book-title'>{currentBook.title}</div>
-			    <div className='book-authors'>{this.handleAuthor(currentBook)}</div>
-			  </div>
+				<div className='book'>
+					<div className='book-top'>
+						<div className='book-cover' style={{
+							width: 128,
+							height: 193,
+							backgroundImage: this.handleBgImage(currentBook)
+						}}></div>
+						<div className='book-shelf-changer'>
+							<select value={this.state.value} onChange={(event) => this.handleOptionChange(event)}>
+							<option value='none' disabled>Move to...</option>
+								{this.renderOptions(options)}
+							</select>
+						</div>
+					</div>
+					<div className='book-title'>{currentBook.title}</div>
+					<div className='book-authors'>{this.handleAuthor(currentBook)}</div>
+				</div>
 			</li>
 		)
 	}
